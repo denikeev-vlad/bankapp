@@ -5,6 +5,7 @@ import ru.vladkempo.bankapp.domain.model.Operation
 
 interface OperationRepository {
     fun getOperations(page: Int): Flow<List<Operation>>
+    suspend fun getOperationDetails(id: Int): Operation
     suspend fun getOperation(id: Int): Operation
     suspend fun addOperation(operation: Operation)
     suspend fun updateOperation(operation: Operation)

@@ -50,7 +50,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -62,4 +62,9 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+// Основная библиотека Retrofit
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+// Конвертер для работы с JSON (Gson)
 }
