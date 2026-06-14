@@ -16,20 +16,6 @@ data class OperationDTO(
     @SerialName("description") val description: String,
     @SerialName("status") val status: String,
     @SerialName("category") val category: String
-) {
+)
 
-    fun OperationDTO.toDomain(): Operation {
-        return Operation(
-            id = this.id,
-            balance = this.balance,
-            money = Money(
-                amount = this.amount,
-                currency = this.currency
-            ),
-            date = date.toLong(),
-            description = this.description,
-            status = StatusOperation.fromString(this.status),
-            category = this.category
-        )
-    }
-}
+
