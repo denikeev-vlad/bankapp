@@ -63,8 +63,10 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
-    implementation("com.squareup.retrofit2:retrofit:3.0.0")
-// Основная библиотека Retrofit
-    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
-// Конвертер для работы с JSON (Gson)
+    // Retrofit + Kotlinx Serialization
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+    // OkHttp (логирование запросов — мастхэв в банках)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 }
