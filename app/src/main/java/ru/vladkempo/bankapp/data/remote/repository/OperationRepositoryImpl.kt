@@ -14,41 +14,24 @@ class OperationRepositoryImpl @Inject constructor(
     private val apiService: BankApiService
 ) : OperationRepository {
     override fun getOperations(page: Int): Flow<List<Operation>> = flow {
-        delay(2000)
+        delay(1000)
 
-        val fakeDtos = listOf(
+        val fakeDtos = (1..10).map {index ->
+
+            //Вычисляем уникальный ID для каждого элемента
+            val uniqueId = ((page - 1) * 10) + index
             OperationDTO(
-                id = 1,
-                amount = 150000,
+                id = uniqueId,
+                amount = (1000..50000).random().toLong() * 100,
                 currency = "RUB",
                 status = "COMPLETED",
                 category = "Переводы",
                 balance = 150000,
                 date = "12.09.2023",
-                description = "Перевод"
-            ),
-            OperationDTO(
-                id = 2,
-                amount = 150000,
-                currency = "RUB",
-                status = "COMPLETED",
-                category = "Переводы",
-                balance = 150000,
-                date = "12.09.2023",
-                description = "Перевод"
-            ),
-            OperationDTO(
-                id = 3,
-                amount = 150000,
-                currency = "RUB",
-                status = "COMPLETED",
-                category = "Переводы",
-                balance = 150000,
-                date = "12.09.2023",
-                description = "Перевод"
+                description = "Операция №$uniqueId (Страница $page)"
             )
+        }
 
-        )
         val domainOperations = fakeDtos.map { it.toDomain() }
         emit(domainOperations)
     }

@@ -19,13 +19,19 @@ fun OperationScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
+    val isNextPageLoading by viewModel.isNextPageLoading.collectAsStateWithLifecycle()
+
     Box(modifier = Modifier.fillMaxSize()) {
         when (val currentState = state) {
             is OperationListState.Loading -> {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
             is OperationListState.Success -> {
-                OperationList(operations = currentState.operations)
+                OperationList(
+                    operations = currentState.operations,
+                    onLoadMore = { viewModel.loadNextPage() },
+                    isNextPageLoading = isNextPageLoading
+                )
             }
             is OperationListState.Error -> {
                 Text(
