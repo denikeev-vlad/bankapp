@@ -37,7 +37,17 @@ class OperationRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getOperationDetails(id: Int): Operation {
-        throw Exception("Not implemented yet")
+        delay(500)
+        return OperationDTO(
+            id = id,
+            amount = (1000..50000).random().toLong() * 100,
+            currency = "RUB",
+            status = "COMPLETED",
+            category = "Переводы",
+            balance = 150000,
+            date = "12.09.2023",
+            description = "Операция №$id"
+        ).toDomain()
     }
 
     override suspend fun getOperation(id: Int): Operation {
