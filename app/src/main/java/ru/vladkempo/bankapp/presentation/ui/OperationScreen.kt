@@ -15,7 +15,8 @@ import ru.vladkempo.bankapp.presentation.viewmodel.OperationListViewModel
 
 @Composable
 fun OperationScreen(
-    viewModel: OperationListViewModel = hiltViewModel()
+    viewModel: OperationListViewModel = hiltViewModel(),
+    onOperationClick: (Int) -> Unit
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -30,7 +31,8 @@ fun OperationScreen(
                 OperationList(
                     operations = currentState.operations,
                     onLoadMore = { viewModel.loadNextPage() },
-                    isNextPageLoading = isNextPageLoading
+                    isNextPageLoading = isNextPageLoading,
+                    onOperationClick = onOperationClick
                 )
             }
             is OperationListState.Error -> {
