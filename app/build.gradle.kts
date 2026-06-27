@@ -71,4 +71,5 @@ dependencies {
 
     // OkHttp (логирование запросов — мастхэв в банках)
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("androidx.navigation:navigation-compose:2.8.1")
 }

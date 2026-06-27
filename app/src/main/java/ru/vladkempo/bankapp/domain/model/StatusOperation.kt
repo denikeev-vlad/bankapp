@@ -1,8 +1,5 @@
 package ru.vladkempo.bankapp.domain.model
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-
 enum class StatusOperation
 {
     PENDING,

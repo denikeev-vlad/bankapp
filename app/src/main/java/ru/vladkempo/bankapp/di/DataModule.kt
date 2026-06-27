@@ -8,10 +8,10 @@ import ru.vladkempo.bankapp.data.remote.repository.OperationRepositoryImpl
 import ru.vladkempo.bankapp.domain.OperationRepository
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 interface DataModule {
-
     @Binds
     @Singleton
     fun bindOperationRepository(

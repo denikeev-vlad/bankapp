@@ -1,5 +1,6 @@
 package ru.vladkempo.bankapp.presentation.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +27,8 @@ import ru.vladkempo.bankapp.domain.model.StatusOperation
 fun OperationList(
     operations: List<Operation>,
     isNextPageLoading: Boolean,
-    onLoadMore: () -> Unit //Это будет вызываться, когда пользователь прокрутит до конца списка
+    onLoadMore: () -> Unit,
+    onOperationClick: (Int) -> Unit //Это будет вызываться, когда пользователь прокрутит до конца списка
 ) {
     //Создаем "состояние" списка (он знает, где сейчас скролл
     val listState = rememberLazyListState()
@@ -57,7 +59,10 @@ fun OperationList(
 
     LazyColumn(state = listState) {
         items(operations) { operation ->
-            OperationItem(operation)
+            OperationItem(
+                operation,
+                onClick = onOperationClick
+            )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
         }
         if (isNextPageLoading) {
@@ -81,11 +86,13 @@ fun OperationList(
 }
 
 @Composable
-fun OperationItem(operation: Operation) {
+fun OperationItem(operation: Operation,
+                  onClick: (Int) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
+            .clickable { onClick(operation.id) }
     ) {
         Text(
             text = operation.description,

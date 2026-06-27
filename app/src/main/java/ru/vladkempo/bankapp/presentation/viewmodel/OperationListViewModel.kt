@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.vladkempo.bankapp.domain.model.Operation
 import ru.vladkempo.bankapp.domain.usecases.GetOperationsUseCase
@@ -52,7 +53,9 @@ class OperationListViewModel @Inject constructor(
                     } else {
                         allOperations.addAll(newOperations)
                         currentPage++
-                        _uiState.value = OperationListState.Success(allOperations.toList())
+                        _uiState.update {
+                            OperationListState.Success(allOperations.toList())
+                        }
 
                     }
                     isCurrentlyLoading = false
