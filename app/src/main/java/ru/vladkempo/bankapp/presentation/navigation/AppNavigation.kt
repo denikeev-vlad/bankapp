@@ -40,7 +40,9 @@ fun AppNavigation() {
             val operationId =  backStackEntry.arguments?.getInt("operationId") ?: 0
 
             //Временно просто текст, пока не создали экран
-            OperationDetailScreen()
+            OperationDetailScreen(
+                onBackClick = { navController.popBackStack() }
+            )
         }
     }
 }
