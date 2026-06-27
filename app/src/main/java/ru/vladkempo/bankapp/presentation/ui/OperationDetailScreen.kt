@@ -1,7 +1,5 @@
 package ru.vladkempo.bankapp.presentation.ui
 
-import android.graphics.drawable.Icon
-import android.telecom.Call
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,7 +36,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import ru.vladkempo.bankapp.core.utils.Formatter
 import ru.vladkempo.bankapp.domain.model.Money.Companion.formatAsCurrency
 import ru.vladkempo.bankapp.domain.model.Operation
 import ru.vladkempo.bankapp.presentation.viewmodel.OperationDetailState

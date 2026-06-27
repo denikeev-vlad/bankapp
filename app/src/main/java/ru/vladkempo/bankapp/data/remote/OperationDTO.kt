@@ -2,9 +2,6 @@ package ru.vladkempo.bankapp.data.remote
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ru.vladkempo.bankapp.domain.model.Money
-import ru.vladkempo.bankapp.domain.model.Operation
-import ru.vladkempo.bankapp.domain.model.StatusOperation
 
 @Serializable
 data class OperationDTO(
