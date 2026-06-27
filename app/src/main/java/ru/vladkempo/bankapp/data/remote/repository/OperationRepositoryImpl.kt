@@ -9,10 +9,17 @@ import ru.vladkempo.bankapp.data.toDomain
 import ru.vladkempo.bankapp.domain.OperationRepository
 import ru.vladkempo.bankapp.domain.model.Operation
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class OperationRepositoryImpl @Inject constructor(
     private val apiService: BankApiService
 ) : OperationRepository {
+
+
+    // 1. Создаем кэш в памяти
+    private val cachedOperations = mutableListOf<Operation>()
+
     override fun getOperations(page: Int): Flow<List<Operation>> = flow {
         delay(1000)
 
@@ -33,21 +40,15 @@ class OperationRepositoryImpl @Inject constructor(
         }
 
         val domainOperations = fakeDtos.map { it.toDomain() }
+        cachedOperations.addAll(domainOperations)
         emit(domainOperations)
     }
 
     override suspend fun getOperationDetails(id: Int): Operation {
         delay(500)
-        return OperationDTO(
-            id = id,
-            amount = (1000..50000).random().toLong() * 100,
-            currency = "RUB",
-            status = "COMPLETED",
-            category = "Переводы",
-            balance = 150000,
-            date = "12.09.2023",
-            description = "Операция №$id"
-        ).toDomain()
+
+        return cachedOperations.find { it.id == id }
+            ?: throw Exception("Операция не найдена в кеше")
     }
 
     override suspend fun getOperation(id: Int): Operation {
