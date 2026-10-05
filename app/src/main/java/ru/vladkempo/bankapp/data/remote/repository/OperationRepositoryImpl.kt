@@ -3,6 +3,8 @@ package ru.vladkempo.bankapp.data.remote.repository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import ru.vladkempo.bankapp.data.remote.BankApiService
 import ru.vladkempo.bankapp.data.remote.OperationDTO
 import ru.vladkempo.bankapp.data.toDomain
@@ -18,6 +20,7 @@ class OperationRepositoryImpl @Inject constructor(
 
 
     // 1. Создаем кэш в памяти
+    private val mutex = Mutex()
     private val cachedOperations = mutableListOf<Operation>()
 
     override fun getOperations(page: Int): Flow<List<Operation>> = flow {
@@ -40,15 +43,23 @@ class OperationRepositoryImpl @Inject constructor(
         }
 
         val domainOperations = fakeDtos.map { it.toDomain() }
-        cachedOperations.addAll(domainOperations)
+
+        mutex.withLock {//Блокируем доступ другим потокам на время записи
+            cachedOperations.addAll(domainOperations)
+        }
+
         emit(domainOperations)
     }
 
     override suspend fun getOperationDetails(id: Int): Operation {
         delay(500)
 
-        return cachedOperations.find { it.id == id }
-            ?: throw Exception("Операция не найдена в кеше")
+        return  mutex.withLock { //Блокируем на время поиска
+            cachedOperations.find { it.id == id }
+                ?: throw Exception("Операция не найдена в кеше")
+        }
+
+
     }
 
     override suspend fun getOperation(id: Int): Operation {
