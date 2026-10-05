@@ -7,6 +7,8 @@ import dagger.hilt.components.SingletonComponent
 import ru.vladkempo.bankapp.data.remote.repository.OperationRepositoryImpl
 import ru.vladkempo.bankapp.domain.OperationRepository
 import javax.inject.Singleton
+import ru.vladkempo.bankapp.data.remote.repository.AuthRepositoryImpl
+import ru.vladkempo.bankapp.domain.AuthRepository
 
 
 @Module
@@ -17,4 +19,10 @@ interface DataModule {
     fun bindOperationRepository(
         impl: OperationRepositoryImpl
     ): OperationRepository
+
+    @Binds
+    @Singleton
+    fun bindAuthRepository(
+        impl: AuthRepositoryImpl
+    ): AuthRepository
 }
